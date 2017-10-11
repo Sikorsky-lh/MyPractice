@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.lihang.mypractice.activity.SecondActivity"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/et_books"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/style2"/>
+    <Button
+        android:text="get xml"
+        android:id="@+id/btn_get"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"/>
+    <com.example.lihang.mypractice.activity.TestView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:duration="100"
+        tools:layout_height="60dp"/>
+</LinearLayout>

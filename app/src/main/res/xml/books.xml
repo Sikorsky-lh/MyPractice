@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<books>
+    <book price="190.0" 出版日期="2008年">疯狂java讲义</book>
+    <book price="180.0" 出版日期="2007年">疯狂Android讲义</book>
+    <book price="120.0" 出版日期="2012年">疯狂xml讲义</book>
+</books>
