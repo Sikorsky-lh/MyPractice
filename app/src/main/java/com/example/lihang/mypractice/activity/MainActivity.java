@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
         ObjectAnimator animator=ObjectAnimator.ofFloat(btn,"alpha",1f,0f);
         animator.start();
-        animator.setDuration(3000);
+        animator.setDuration(1000);
         animator.setRepeatCount(6);
         animator.setRepeatMode(ValueAnimator.REVERSE);
         animator.addListener(new AnimatorListenerAdapter() {
