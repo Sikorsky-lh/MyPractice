@@ -7,12 +7,8 @@ import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
-import android.graphics.drawable.ClipDrawable;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,15 +17,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lihang.mypractice.R;
-import com.example.lihang.mypractice.SImpleEnumUse;
 
-import java.util.Random;
 import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     private EditText et_main;
@@ -54,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        };
 
-        btn= (Button) findViewById(R.id.btn);
+        btn = (Button) findViewById(R.id.btn);
 //        et_main= (EditText) findViewById(R.id.et);
         final Animation anim= AnimationUtils.loadAnimation(MainActivity.this,R.anim.my_anmi);
 //        anim.setFillAfter(true);

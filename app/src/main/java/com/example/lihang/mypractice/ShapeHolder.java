@@ -70,4 +70,12 @@ public class ShapeHolder {
     public ShapeDrawable getShape() {
         return shape;
     }
+
+    public float getWidth(){
+        return getShape().getShape().getWidth();
+    }
+
+    public float getHeight(){
+        return getShape().getShape().getHeight();
+    }
 }
