@@ -1,8 +1,11 @@
 package com.example.lihang.mypractice.activity;
 
+import android.animation.Animator;
 import android.animation.AnimatorInflater;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.drawable.ClipDrawable;
 import android.os.Handler;
@@ -18,6 +21,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lihang.mypractice.R;
@@ -80,10 +84,20 @@ public class MainActivity extends AppCompatActivity {
                 colorAnim.setTarget(findViewById(R.id.main_container));
                 colorAnim.start();
                 imageView.startAnimation(anim);
-
             }
         });
 
+        ObjectAnimator animator=ObjectAnimator.ofFloat(btn,"alpha",1f,0f);
+        animator.start();
+        animator.setDuration(3000);
+        animator.setRepeatCount(4);
+        animator.setRepeatMode(ValueAnimator.REVERSE);
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                Toast.makeText(MainActivity.this,"按钮消失了",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -102,6 +116,14 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.path_effect:
                 intent.setClass(MainActivity.this,PathActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.anim_drawable:
+                intent.setClass(MainActivity.this,AnimDrawableActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.animator:
+                intent.setClass(MainActivity.this,AnimatorActivity.class);
                 startActivity(intent);
                 break;
         }

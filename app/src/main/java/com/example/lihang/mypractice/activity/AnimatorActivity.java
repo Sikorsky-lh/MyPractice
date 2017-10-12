@@ -5,20 +5,16 @@ import android.os.Bundle;
 import android.widget.LinearLayout;
 
 import com.example.lihang.mypractice.R;
-import com.example.lihang.mypractice.cview.PathEffectView;
+import com.example.lihang.mypractice.cview.MyAnimationView;
 
-import java.util.Timer;
-
-public class PathActivity extends AppCompatActivity {
+public class AnimatorActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_path);
+        setContentView(R.layout.activity_animator);
 
-        LinearLayout ll= (LinearLayout) findViewById(R.id.path_container);
-        ll.addView(new PathEffectView(this));
-
-
+        LinearLayout ll= (LinearLayout) findViewById(R.id.animator_container);
+        ll.addView(new MyAnimationView(this));
     }
 }
