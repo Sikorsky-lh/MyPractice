@@ -11,4 +11,6 @@
         android:title="animation drawable"/>
     <item android:id="@+id/animator"
         android:title="animator"/>
+    <item android:id="@+id/surface"
+        android:title="surface"/>
 </menu>

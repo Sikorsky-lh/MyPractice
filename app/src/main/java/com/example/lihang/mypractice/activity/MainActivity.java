@@ -118,6 +118,10 @@ public class MainActivity extends AppCompatActivity {
                 intent.setClass(MainActivity.this,AnimatorActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.surface:
+                intent.setClass(MainActivity.this,SurfaceActivity.class);
+                startActivity(intent);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
