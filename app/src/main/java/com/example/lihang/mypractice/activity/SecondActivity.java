@@ -1,6 +1,7 @@
 package com.example.lihang.mypractice.activity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.XmlResourceParser;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
+import java.util.Set;
 
 public class SecondActivity extends AppCompatActivity {
 
@@ -29,8 +31,6 @@ public class SecondActivity extends AppCompatActivity {
 
         context=SecondActivity.this;
 
-        ActionBar actionBar=getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
 
         findViewById(R.id.btn_get).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +65,16 @@ public class SecondActivity extends AppCompatActivity {
                 }
 //
                 EditText et= (EditText) findViewById(R.id.et_books);
-                et.setText(sb.toString());
+//                et.setText(sb.toString());
+                SharedPreferences pref=getSharedPreferences("file_path",MODE_PRIVATE);
+                Set<String> list=pref.getStringSet("list",null);
+
+                StringBuilder builder=new StringBuilder();
+
+                for(String s:list){
+                    builder.append(s);
+                }
+                et.setText(builder.toString());
 
                 Toast.makeText(SecondActivity.this,"sdf",Toast.LENGTH_SHORT).show();
             }

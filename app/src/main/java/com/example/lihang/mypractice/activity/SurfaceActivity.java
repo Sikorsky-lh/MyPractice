@@ -26,6 +26,7 @@ public class SurfaceActivity extends AppCompatActivity {
     final int WIDTH=1520;
 
     private int cx;
+    private int cy=0;
     int centerY=Height/2;
 
     Timer timer=new Timer();
@@ -55,11 +56,20 @@ public class SurfaceActivity extends AppCompatActivity {
                 if(task!=null){
                     task.cancel();
                 }
+
                 task=new TimerTask() {
                     @Override
                     public void run() {
-                        int cy= (int) (view.getId()==R.id.sin? centerY-100*Math.cos((cx-5)*2*Math.PI/150)
-                                                        :centerY-100*Math.sin((cx-5)*2*Math.PI/150));
+                        switch (view.getId()){
+                            case R.id.cos:
+                                cy= (int) (centerY-100*Math.cos((cx-5)*2*Math.PI/150));
+                                break;
+                            case R.id.sin:
+                                cy= (int) (centerY-100*Math.sin((cx-5)*2*Math.PI/150));
+                                break;
+                        }
+//                        int cy= (int) (view.getId()==R.id.cos? centerY-100*Math.cos((cx-5)*2*Math.PI/150)
+//                                                        :centerY-100*Math.sin((cx-5)*2*Math.PI/150));
                         Canvas canvas=holder.lockCanvas(new Rect(cx,cy-2,cx+2,cy+2));
                         canvas.drawPoint(cx,cy,paint);
                         cx++;
@@ -107,8 +117,8 @@ public class SurfaceActivity extends AppCompatActivity {
 
         holder.unlockCanvasAndPost(canvas);
 
-        holder.lockCanvas(new Rect(0,0,0,0));
-        holder.unlockCanvasAndPost(canvas);
+//        holder.lockCanvas(new Rect(0,0,0,0));
+//        holder.unlockCanvasAndPost(canvas);
     }
 
 }
