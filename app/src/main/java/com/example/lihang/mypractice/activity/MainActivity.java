@@ -82,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
 				colorAnim.setTarget(findViewById(R.id.main_container));
 				colorAnim.start();
 				imageView.startAnimation(anim);
+
+				deleteFile("data");
 			}
 		});
 
@@ -107,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 		editor.putStringSet("list", listSet);
 		editor.putString("path", getFilesDir().getPath());
 		editor.putBoolean("is_list", true);
-		editor.putString("test","test");
+		editor.putString("test", "test");
 		editor.commit();
 	}
 
@@ -139,6 +141,10 @@ public class MainActivity extends AppCompatActivity {
 				break;
 			case R.id.surface:
 				intent.setClass(MainActivity.this, SurfaceActivity.class);
+				startActivity(intent);
+				break;
+			case R.id.file:
+				intent.setClass(MainActivity.this, FileActivity.class);
 				startActivity(intent);
 				break;
 		}
