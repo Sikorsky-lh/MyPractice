@@ -69,25 +69,9 @@ public class MyAnimationView extends View implements ValueAnimator.AnimatorUpdat
 		fallAnim.setDuration(duration);
 		fallAnim.setInterpolator(new AccelerateInterpolator());
 		fallAnim.addUpdateListener(this);
-//        fallAnim.setRepeatCount(10);
-//        fallAnim.setRepeatMode(ValueAnimator.REVERSE);
+        fallAnim.setRepeatCount(10);
+        fallAnim.setRepeatMode(ValueAnimator.REVERSE);
 
-		ValueAnimator squashAnim1 = getSquashAnim(newBall, "x", duration, newBall.getX(), newBall.getX() - BALL_SIZE / 2);
-		ValueAnimator squashAnim2 = getSquashAnim(newBall, "width", duration, newBall.getWidth(), newBall.getWidth() + BALL_SIZE / 2);
-		ValueAnimator stretchAnim1 = getSquashAnim(newBall, "y", duration, endY, endY + BALL_SIZE / 2);
-		ValueAnimator stretchAnim2 = getSquashAnim(newBall, "height", duration, newBall.getHeight(), newBall.getHeight() - BALL_SIZE / 2);
-
-		ValueAnimator bounceBackAnim = getSquashAnim(newBall, "y", duration * 4, endY, startY);
-
-		AnimatorSet bouncer = new AnimatorSet();
-
-		bouncer.play(fallAnim).before(squashAnim1);
-
-		bouncer.play(squashAnim1).with(squashAnim2);
-		bouncer.play(squashAnim1).with(stretchAnim1);
-		bouncer.play(squashAnim1).with(stretchAnim2);
-
-		bouncer.play(bounceBackAnim).after(stretchAnim2);
 
 		ObjectAnimator fadeAnim = ObjectAnimator.ofFloat(newBall, "alpha", 1f, 0f);
 		fadeAnim.setDuration(20);
@@ -98,13 +82,10 @@ public class MyAnimationView extends View implements ValueAnimator.AnimatorUpdat
 			}
 		});
 
-
 		AnimatorSet animatorSet = new AnimatorSet();
-//        animatorSet.play(fallAnim).before(fadeAnim);
-		animatorSet.play(bouncer).before(fadeAnim);
+        animatorSet.play(fallAnim).before(fadeAnim);
 
 		animatorSet.start();
-
 		return true;
 	}
 
