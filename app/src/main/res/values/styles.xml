@@ -14,7 +14,7 @@
     </style>
 
     <style name="style2" parent="style1">
-        <item name="android:background">#ee6</item>
+        <item name="android:background">@android:color/holo_blue_dark</item>
         <item name="android:padding">8dp</item>
         <!--<item name="textColor">#000</item>-->
     </style>
