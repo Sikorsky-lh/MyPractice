@@ -21,72 +21,76 @@ import java.util.Set;
 
 public class SecondActivity extends AppCompatActivity {
 
-    Context context;
+	Context context;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 //        setTheme(R.style.CrazyTheme);
-        setContentView(R.layout.activity_second);
+		setContentView(R.layout.activity_second);
 
-        context=SecondActivity.this;
+		context = SecondActivity.this;
 
 
-        findViewById(R.id.btn_get).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                StringBuilder sb=new StringBuilder("");
-                XmlResourceParser xrp=getResources().getXml(R.xml.books);
-                try{
+		findViewById(R.id.btn_get).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				StringBuilder sb = new StringBuilder("");
+				XmlResourceParser xrp = getResources().getXml(R.xml.books);
+				try {
 
-                    while (xrp.getEventType()!= XmlPullParser.END_DOCUMENT){
+					while (xrp.getEventType() != XmlPullParser.END_DOCUMENT) {
 
-                        if(xrp.getEventType()==XmlPullParser.START_TAG){
-                            String tagName=xrp.getName();
-                            if(tagName.equals("book")){
-                                String bookPrice=xrp.getAttributeValue(0);
-                                sb.append("价格：");
-                                sb.append(bookPrice);
-                                sb.append("\t");
-                                sb.append("出版日期：");
-                                String bookDate=xrp.getAttributeValue(1);
-                                sb.append(bookDate+"\t");
-                                sb.append("书名：");
-                                sb.append(xrp.nextText());
-                            }
-                            sb.append("\n\n");
-                        }
-                        xrp.next();
-                    }
-                } catch (XmlPullParserException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+						if (xrp.getEventType() == XmlPullParser.START_TAG) {
+							String tagName = xrp.getName();
+							if (tagName.equals("book")) {
+								String bookPrice = xrp.getAttributeValue(0);
+								sb.append("价格：");
+								sb.append(bookPrice);
+								sb.append("\t");
+								sb.append("出版日期：");
+								String bookDate = xrp.getAttributeValue(1);
+								sb.append(bookDate + "\t");
+								sb.append("书名：");
+								sb.append(xrp.nextText());
+							}
+							sb.append("\n\n");
+						}
+						xrp.next();
+					}
+				} catch (XmlPullParserException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 //
-                EditText et= (EditText) findViewById(R.id.et_books);
+				EditText et = (EditText) findViewById(R.id.et_books);
 //                et.setText(sb.toString());
-                SharedPreferences pref=getSharedPreferences("file_path",MODE_PRIVATE);
-                Set<String> list=pref.getStringSet("list",null);
+				SharedPreferences pref = getSharedPreferences("file_path", MODE_PRIVATE);
+				Set<String> list = pref.getStringSet("list", null);
 
-                StringBuilder builder=new StringBuilder();
+				if (pref.getBoolean("is_list", false)) {
+					StringBuilder builder = new StringBuilder();
 
-                for(String s:list){
-                    builder.append(s);
-                }
-                et.setText(builder.toString());
+					for (String s : list) {
+						builder.append(s);
+					}
+					et.setText(builder.toString());
+				} else {
+					et.setText(pref.getString("path", null));
+				}
 
-                Toast.makeText(SecondActivity.this,"sdf",Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+				Toast.makeText(SecondActivity.this, "sdf", Toast.LENGTH_SHORT).show();
+			}
+		});
+	}
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
 
-        }
-        return super.onOptionsItemSelected(item);
-    }
+		}
+		return super.onOptionsItemSelected(item);
+	}
 }

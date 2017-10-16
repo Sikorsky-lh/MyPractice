@@ -7,6 +7,7 @@ import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -21,20 +22,25 @@ import android.widget.Toast;
 
 import com.example.lihang.mypractice.R;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Timer;
 
 public class MainActivity extends AppCompatActivity {
-    private EditText et_main;
-    private Button btn;
+	private EditText et_main;
+	private Button btn;
 
-    public static final int MSG=1;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+	public static final int MSG = 1;
 
-        final Timer timer=new Timer();
-        final ImageView imageView= (ImageView) findViewById(R.id.et);
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+		final Timer timer = new Timer();
+		final ImageView imageView = (ImageView) findViewById(R.id.et);
 //        final ClipDrawable clipDrawable= (ClipDrawable) imageView.getDrawable();
 //
 //        final Handler handler=new Handler(){
@@ -46,19 +52,19 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        };
 
-        btn = (Button) findViewById(R.id.btn);
+		btn = (Button) findViewById(R.id.btn);
 //        et_main= (EditText) findViewById(R.id.et);
-        final Animation anim= AnimationUtils.loadAnimation(MainActivity.this,R.anim.my_anmi);
+		final Animation anim = AnimationUtils.loadAnimation(MainActivity.this, R.anim.my_anmi);
 //        anim.setFillAfter(true);
 
-        final String str=getResources().getString(R.string.app_name);
+		final String str = getResources().getString(R.string.app_name);
 
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(btn instanceof Button){
-                    Toast.makeText(MainActivity.this,str,Toast.LENGTH_SHORT).show();
-                }
+		btn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (btn instanceof Button) {
+					Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
+				}
 //                timer.schedule(new TimerTask() {
 //                    @Override
 //                    public void run() {
@@ -71,59 +77,70 @@ public class MainActivity extends AppCompatActivity {
 //                    }
 //                },0,100);
 
-                ObjectAnimator colorAnim= (ObjectAnimator) AnimatorInflater.loadAnimator(MainActivity.this,R.animator.color_anim);
-                colorAnim.setEvaluator(new ArgbEvaluator());
-                colorAnim.setTarget(findViewById(R.id.main_container));
-                colorAnim.start();
-                imageView.startAnimation(anim);
-            }
-        });
+				ObjectAnimator colorAnim = (ObjectAnimator) AnimatorInflater.loadAnimator(MainActivity.this, R.animator.color_anim);
+				colorAnim.setEvaluator(new ArgbEvaluator());
+				colorAnim.setTarget(findViewById(R.id.main_container));
+				colorAnim.start();
+				imageView.startAnimation(anim);
+			}
+		});
 
-        ObjectAnimator animator=ObjectAnimator.ofFloat(btn,"alpha",1f,0f);
-        animator.start();
-        animator.setDuration(1000);
-        animator.setRepeatCount(6);
-        animator.setRepeatMode(ValueAnimator.REVERSE);
-        animator.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                Toast.makeText(MainActivity.this,"按钮消失了",Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+		ObjectAnimator animator = ObjectAnimator.ofFloat(btn, "alpha", 1f, 0f);
+		animator.start();
+		animator.setDuration(1000);
+		animator.setRepeatCount(6);
+		animator.setRepeatMode(ValueAnimator.REVERSE);
+		animator.addListener(new AnimatorListenerAdapter() {
+			@Override
+			public void onAnimationEnd(Animator animation) {
+				Toast.makeText(MainActivity.this, "按钮消失了", Toast.LENGTH_SHORT).show();
+			}
+		});
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+		SharedPreferences pref = getSharedPreferences("file_path", MODE_PRIVATE);
+		SharedPreferences.Editor editor = pref.edit();
+		Set<String> listSet = new HashSet<>();
+		Collections.addAll(listSet, fileList());
+//        for (String s:fileList()){
+//			listSet.add(s);
+//        }
+		editor.putStringSet("list", listSet);
+		editor.putString("path", getFilesDir().getPath());
+		editor.putBoolean("is_list", true);
+		editor.commit();
+	}
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent=new Intent();
-        switch (item.getItemId()){
-            case R.id.next:
-                intent.setClass(MainActivity.this,SecondActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.path_effect:
-                intent.setClass(MainActivity.this,PathActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.anim_drawable:
-                intent.setClass(MainActivity.this,AnimDrawableActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.animator:
-                intent.setClass(MainActivity.this,AnimatorActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.surface:
-                intent.setClass(MainActivity.this,SurfaceActivity.class);
-                startActivity(intent);
-                break;
-        }
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
 
-        return super.onOptionsItemSelected(item);
-    }
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		Intent intent = new Intent();
+		switch (item.getItemId()) {
+			case R.id.next:
+				intent.setClass(MainActivity.this, SecondActivity.class);
+				startActivity(intent);
+				break;
+			case R.id.path_effect:
+				intent.setClass(MainActivity.this, PathActivity.class);
+				startActivity(intent);
+				break;
+			case R.id.anim_drawable:
+				intent.setClass(MainActivity.this, AnimDrawableActivity.class);
+				startActivity(intent);
+				break;
+			case R.id.animator:
+				intent.setClass(MainActivity.this, AnimatorActivity.class);
+				startActivity(intent);
+				break;
+			case R.id.surface:
+				intent.setClass(MainActivity.this, SurfaceActivity.class);
+				startActivity(intent);
+				break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 }
