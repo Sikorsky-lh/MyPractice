@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
 		editor.putStringSet("list", listSet);
 		editor.putString("path", getFilesDir().getPath());
 		editor.putBoolean("is_list", true);
+		editor.putString("test","test");
 		editor.commit();
 	}
 
