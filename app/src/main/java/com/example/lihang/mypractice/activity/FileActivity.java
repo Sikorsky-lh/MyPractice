@@ -50,19 +50,18 @@ public class FileActivity extends AppCompatActivity {
 		init();
 		save();
 
-
 		findViewById(R.id.restore).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 //				String data = restore();
 //				et.setText(data);
 //				et.setSelection(data.length());
-				if(!currentParent.getPath().equals(getFilesDir().getPath())){
-					currentParent=currentParent.getParentFile();
-					currentFiles=currentParent.listFiles();
+				if (!currentParent.getPath().equals(getFilesDir().getPath())) {
+					currentParent = currentParent.getParentFile();
+					currentFiles = currentParent.listFiles();
 					inflateFileList(currentFiles);
-				}else {
-					Toast.makeText(FileActivity.this,"已经到达最顶层文件夹",Toast.LENGTH_SHORT).show();
+				} else {
+					Toast.makeText(FileActivity.this, "已经到达最顶层文件夹", Toast.LENGTH_SHORT).show();
 				}
 				et.setText(currentParent.getPath());
 			}
@@ -71,8 +70,8 @@ public class FileActivity extends AppCompatActivity {
 //		currentParent = Environment.getExternalStorageDirectory();
 //		currentFiles = currentParent.listFiles();
 
-		currentParent=getFilesDir();
-		currentFiles=getFilesDir().listFiles();
+		currentParent = getFilesDir();
+		currentFiles = getFilesDir().listFiles();
 		inflateFileList(currentFiles);
 	}
 
@@ -84,17 +83,17 @@ public class FileActivity extends AppCompatActivity {
 		adapter.setCallBack(new FileAdapter.CallBack() {
 			@Override
 			public void onItemClick(int pos) {
-				if(currentFiles[pos].isFile()){
-					Toast.makeText(FileActivity.this,"这是一个文件，无法进入",Toast.LENGTH_SHORT).show();
+				if (currentFiles[pos].isFile()) {
+					Toast.makeText(FileActivity.this, "这是一个文件，无法进入", Toast.LENGTH_SHORT).show();
 					return;
 				}
 
-				File[] temp=currentFiles[pos].listFiles();
-				if(temp==null || temp.length==0){
-					Toast.makeText(FileActivity.this,"当前路径不可访问，或该路径下没有文件",Toast.LENGTH_SHORT).show();
-				}else {
-					currentParent=currentFiles[pos];
-					currentFiles=temp;
+				File[] temp = currentFiles[pos].listFiles();
+				if (temp == null || temp.length == 0) {
+					Toast.makeText(FileActivity.this, "当前路径不可访问，或该路径下没有文件", Toast.LENGTH_SHORT).show();
+				} else {
+					currentParent = currentFiles[pos];
+					currentFiles = temp;
 					inflateFileList(currentFiles);
 					et.setText(currentParent.getPath());
 				}
@@ -156,11 +155,7 @@ public class FileActivity extends AppCompatActivity {
 	private void inflateFileList(File[] files) {
 		fileList.clear();
 		for (int i = 0; i < files.length; i++) {
-			if(files[i].isDirectory()){
-				fileList.add(new MyFile(files[i].getName(),true));
-			}else {
-				fileList.add(new MyFile(files[i].getName(),false));
-			}
+			fileList.add(new MyFile(files[i].getName(), files[i].isDirectory()));
 		}
 		adapter.notifyDataSetChanged();
 	}

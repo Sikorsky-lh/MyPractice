@@ -8,15 +8,10 @@ public class MyFile {
 	String name;
 	boolean isFolder;
 
-	public MyFile(String name,boolean isFolder){
-		this.name=name;
-		if(isFolder){
-			this.isFolder=true;
-		}else {
-			this.isFolder=false;
-		}
+	public MyFile(String name, boolean isFolder) {
+		this.name = name;
+		this.isFolder = isFolder;
 	}
-
 	public String getName() {
 		return name;
 	}
