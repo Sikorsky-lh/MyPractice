@@ -1,20 +1,29 @@
 package com.example.lihang.mypractice.activity;
 
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.lihang.mypractice.MyFile;
 import com.example.lihang.mypractice.R;
+import com.example.lihang.mypractice.adapter.FileAdapter;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileActivity extends AppCompatActivity {
 
@@ -25,23 +34,77 @@ public class FileActivity extends AppCompatActivity {
 	BufferedReader reader = null;
 
 	private EditText et;
+	private RecyclerView recyclerView;
+
+	private File currentParent;
+	private File[] currentFiles;
+	private List<MyFile> fileList = new ArrayList<>();
+
+	private FileAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_file);
 
-		et = (EditText) findViewById(R.id.et_data);
+		init();
 		save();
+
 
 		findViewById(R.id.restore).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				String data = restore();
-				et.setText(data);
-				et.setSelection(data.length());
+//				String data = restore();
+//				et.setText(data);
+//				et.setSelection(data.length());
+				if(!currentParent.getPath().equals(getFilesDir().getPath())){
+					currentParent=currentParent.getParentFile();
+					currentFiles=currentParent.listFiles();
+					inflateFileList(currentFiles);
+				}else {
+					Toast.makeText(FileActivity.this,"已经到达最顶层文件夹",Toast.LENGTH_SHORT).show();
+				}
+				et.setText(currentParent.getPath());
 			}
 		});
+
+//		currentParent = Environment.getExternalStorageDirectory();
+//		currentFiles = currentParent.listFiles();
+
+		currentParent=getFilesDir();
+		currentFiles=getFilesDir().listFiles();
+		inflateFileList(currentFiles);
+	}
+
+	private void init() {
+		et = (EditText) findViewById(R.id.et_data);
+		recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+		adapter = new FileAdapter(fileList);
+
+		adapter.setCallBack(new FileAdapter.CallBack() {
+			@Override
+			public void onItemClick(int pos) {
+				if(currentFiles[pos].isFile()){
+					Toast.makeText(FileActivity.this,"这是一个文件，无法进入",Toast.LENGTH_SHORT).show();
+					return;
+				}
+
+				File[] temp=currentFiles[pos].listFiles();
+				if(temp==null || temp.length==0){
+					Toast.makeText(FileActivity.this,"当前路径不可访问，或该路径下没有文件",Toast.LENGTH_SHORT).show();
+				}else {
+					currentParent=currentFiles[pos];
+					currentFiles=temp;
+					inflateFileList(currentFiles);
+					et.setText(currentParent.getPath());
+				}
+			}
+		});
+
+		recyclerView.setAdapter(adapter);
+		LinearLayoutManager manager = new LinearLayoutManager(this);
+		manager.setOrientation(LinearLayoutManager.VERTICAL);
+		recyclerView.setLayoutManager(manager);
 	}
 
 	private void save() {
@@ -88,6 +151,18 @@ public class FileActivity extends AppCompatActivity {
 			}
 		}
 		return null;
+	}
+
+	private void inflateFileList(File[] files) {
+		fileList.clear();
+		for (int i = 0; i < files.length; i++) {
+			if(files[i].isDirectory()){
+				fileList.add(new MyFile(files[i].getName(),true));
+			}else {
+				fileList.add(new MyFile(files[i].getName(),false));
+			}
+		}
+		adapter.notifyDataSetChanged();
 	}
 
 }
