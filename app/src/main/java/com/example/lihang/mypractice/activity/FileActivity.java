@@ -155,7 +155,7 @@ public class FileActivity extends AppCompatActivity {
 	private void inflateFileList(File[] files) {
 		fileList.clear();
 		for (int i = 0; i < files.length; i++) {
-			fileList.add(new MyFile(files[i].getName(),files[i].isDirectory()));
+			fileList.add(new MyFile(files[i].getName(), files[i].isDirectory()));
 		}
 		adapter.notifyDataSetChanged();
 	}
