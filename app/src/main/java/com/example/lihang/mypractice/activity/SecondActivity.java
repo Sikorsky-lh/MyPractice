@@ -80,7 +80,7 @@ public class SecondActivity extends AppCompatActivity {
 					et.setText(pref.getString("path", null));
 				}
 
-				Toast.makeText(SecondActivity.this, pref.getString("test",null), Toast.LENGTH_SHORT).show();
+				Toast.makeText(SecondActivity.this, pref.getString("test", null), Toast.LENGTH_SHORT).show();
 			}
 		});
 	}

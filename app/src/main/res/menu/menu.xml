@@ -13,4 +13,6 @@
         android:title="animator"/>
     <item android:id="@+id/surface"
         android:title="surface"/>
+    <item android:id="@+id/file"
+          android:title="file"/>
 </menu>
