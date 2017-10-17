@@ -56,13 +56,13 @@ public class FileActivity extends AppCompatActivity {
 //				String data = restore();
 //				et.setText(data);
 //				et.setSelection(data.length());
-				if (!currentParent.getPath().equals(getFilesDir().getPath())) {
-					currentParent = currentParent.getParentFile();
-					currentFiles = currentParent.listFiles();
-					inflateFileList(currentFiles);
-				} else {
-					Toast.makeText(FileActivity.this, "已经到达最顶层文件夹", Toast.LENGTH_SHORT).show();
+				if(currentParent.getPath().equals(getFilesDir().getPath())){
+					Toast.makeText(FileActivity.this,"已达到最顶层文件夹",Toast.LENGTH_SHORT).show();
+					return;
 				}
+				currentParent=currentParent.getParentFile();
+				currentFiles=currentParent.listFiles();
+				inflateFileList(currentFiles);
 				et.setText(currentParent.getPath());
 			}
 		});
