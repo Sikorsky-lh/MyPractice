@@ -10,11 +10,7 @@ public class MyFile {
 
 	public MyFile(String name,boolean isFolder){
 		this.name=name;
-		if(isFolder){
-			this.isFolder=true;
-		}else {
-			this.isFolder=false;
-		}
+		this.isFolder=isFolder;
 	}
 
 	public String getName() {
