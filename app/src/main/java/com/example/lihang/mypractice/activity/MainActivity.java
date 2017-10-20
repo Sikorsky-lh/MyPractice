@@ -133,10 +133,29 @@ public class MainActivity extends AppCompatActivity {
 				startActivity(intent);
 				break;
 			case R.id.message:
-				intent.setClass(MainActivity.this,MessageActivity.class);
+				intent.setClass(MainActivity.this, MessageActivity.class);
 				startActivity(intent);
 				break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
+	@Override
+	public void onBackPressed() {
+		if (exit()) {
+			finish();
+		} else {
+			Toast.makeText(MainActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	long lastTime = 0;
+	long curTime = 0;
+
+	private boolean exit() {
+		lastTime = curTime;
+		curTime = System.currentTimeMillis();
+		return curTime - lastTime < 2000;
+	}
+
 }
