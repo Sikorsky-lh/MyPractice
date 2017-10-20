@@ -15,4 +15,8 @@
         android:title="surface"/>
     <item android:id="@+id/file"
           android:title="file"/>
+    <item android:id="@+id/message"
+          android:title="message"
+          app:showAsAction="always"
+        android:icon="@android:drawable/ic_menu_send"/>
 </menu>

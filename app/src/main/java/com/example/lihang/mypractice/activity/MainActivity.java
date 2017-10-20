@@ -6,10 +6,15 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +32,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Timer;
+import java.util.jar.Manifest;
 
 public class MainActivity extends AppCompatActivity {
 	private EditText et_main;
@@ -41,16 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
 		final Timer timer = new Timer();
 		final ImageView imageView = (ImageView) findViewById(R.id.et);
-//        final ClipDrawable clipDrawable= (ClipDrawable) imageView.getDrawable();
-//
-//        final Handler handler=new Handler(){
-//            @Override
-//            public void handleMessage(Message msg) {
-//                if(msg.what==MSG){
-//                    clipDrawable.setLevel(clipDrawable.getLevel()+200);
-//                }
-//            }
-//        };
 
 		btn = (Button) findViewById(R.id.btn);
 //        et_main= (EditText) findViewById(R.id.et);
@@ -65,17 +61,6 @@ public class MainActivity extends AppCompatActivity {
 				if (btn instanceof Button) {
 					Toast.makeText(MainActivity.this, str, Toast.LENGTH_SHORT).show();
 				}
-//                timer.schedule(new TimerTask() {
-//                    @Override
-//                    public void run() {
-//                        Message msg=new Message();
-//                        msg.what=MSG;
-//                        handler.sendMessage(msg);
-//                        if(clipDrawable.getLevel()>=10000){
-//                            this.cancel();
-//                        }
-//                    }
-//                },0,100);
 
 				ObjectAnimator colorAnim = (ObjectAnimator) AnimatorInflater.loadAnimator(MainActivity.this, R.animator.color_anim);
 				colorAnim.setEvaluator(new ArgbEvaluator());
@@ -145,6 +130,10 @@ public class MainActivity extends AppCompatActivity {
 				break;
 			case R.id.file:
 				intent.setClass(MainActivity.this, FileActivity.class);
+				startActivity(intent);
+				break;
+			case R.id.message:
+				intent.setClass(MainActivity.this,MessageActivity.class);
 				startActivity(intent);
 				break;
 		}
